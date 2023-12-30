@@ -82,10 +82,12 @@ fn get_csv(ano: i32) -> DataFrame{
         Some(s) => path = s.to_path_buf(),
     }
     path = path.join("data");
-    match fs::create_dir(&path){
-        Ok(t) => println!("path createt in {:?}", t),
-        Err(e) => if !e.to_string().contains("File exists") {panic!("cant be create the path {}. {}", path.display(), e)},
-    }
+    if !path.exists() {
+        match fs::create_dir(&path){
+            Ok(t) => println!("path createt in {:?}", t),
+            Err(e) => panic!("cant be create the path {}. {}", path.display(), e),
+        }
+    } 
     path = path.join(ano.to_string() + ".csv");
     match CsvReader::from_path(path){
         Ok(t) => {
@@ -116,9 +118,11 @@ fn save_db(mut db: HashMap<i32, DataFrame>){
             Some(s) => path = s.to_path_buf(),
         }
         path = path.join("data");
-        match fs::create_dir(&path){
-            Ok(t) => println!("path createt in {:?}", t),
-            Err(e) => if !e.to_string().contains("File exists") {panic!("cant be create the path {}. {}", path.display(), e)},
+        if !path.exists() {
+            match fs::create_dir(&path){
+                Ok(t) => println!("path createt in {:?}", t),
+                Err(e) => panic!("cant be create the path {}. {}", path.display(), e),
+            }
         }
         path = path.join(ano.to_string() + ".csv");
         match fs::File::create(path){
