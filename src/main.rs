@@ -9,10 +9,11 @@ use std::hash::{Hash, Hasher};
 
 fn help(){
     println!("Uso:");
-    println!("    -r            leer datos de un csv");
-    println!("    -e            mostrar estadisticas de un ano");
-    println!("    -s            mostrar todos los datos almasenados en un ano");
-    println!("    -h            mostar la alluda");
+    println!("    -r            Leer datos de un csv");
+    println!("    -e            Mostrar estadisticas de un ano");
+    println!("    -s            Mostrar todos los datos almasenados en un ano");
+    println!("    -v            Mostar la version del programa");
+    println!("    -h            Mostar la ayuda");
 }
 
 fn new_df() -> DataFrame{
@@ -384,6 +385,10 @@ fn main() -> Result<(), &'static str>{
         if args[1] == "-h" {
             help();
             return Ok(())
+        }
+        else if args[1] == "-v" {
+            println!("Vercion: 0.1.0");
+            return Ok(());
         }
         else if args[1] == "-r" {
             //==========================
